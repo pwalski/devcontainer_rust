@@ -7,7 +7,7 @@ on:
   # run it during pull request
   pull_request:
 
-defaults:
+jobs:
   # define job to build and publish docker image
   build-and-push-docker-image:
     name: Build Docker image and push to repository
@@ -26,7 +26,7 @@ defaults:
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build image and push to Docker Hub
@@ -39,6 +39,6 @@ defaults:
             pwalski/devcontainers/rust:latest
           # build on feature branches, push only on master branch
           push: ${{ github.ref == 'refs/heads/master' }}
-        
+
       - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}}
+        run: echo ${{ steps.docker_build.outputs.digest }}
