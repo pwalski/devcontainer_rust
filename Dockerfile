@@ -12,7 +12,16 @@ RUN apt-get update  && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install exa \
     && apt-get -y install tldr \
     && apt-get -y install nodejs \
-    && apt-get -y install tree
+    && apt-get -y install tree \
+    && apt-get -y install npm
+
+RUN curl -fsSL https://deb.nodesource.com/setup_current.x | bash -
+RUN apt-get install -y nodejs
+
+RUN npm install -g typescript
+RUN npm install -g webpack
+RUN npm install -g yarn
+RUN npm install -g grunt
 
 USER vscode
 
