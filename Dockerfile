@@ -47,4 +47,5 @@ RUN cargo install \
     cargo-license \
     cargo-readme \
     cargo-xbuild \
-    worker-build
+    worker-build \
+    cargo-watch
