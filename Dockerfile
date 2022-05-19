@@ -4,17 +4,29 @@
 ARG VARIANT="buster"
 FROM mcr.microsoft.com/vscode/devcontainers/rust:0-${VARIANT}
 
-RUN apt-get update  && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install zsh \
-    && apt-get -y install neovim \
-    && apt-get -y install emacs \
-    && apt-get -y install fzf \
-    && apt-get -y install exa \
-    && apt-get -y install tldr \
-    && apt-get -y install nodejs \
-    && apt-get -y install tree \
-    && apt-get -y install npm \
-    && apt-get -y install python3-venv
+RUN export DEBIAN_FRONTEND=noninteractive && \
+    apt-get update && \
+    apt-get install -y \
+    zsh \
+    neovim \
+    emacs \
+    fzf \
+    exa \
+    tldr \
+    nodejs \
+    tree \
+    npm \
+    build-essential cmake \
+    python-dev \
+    python3-dev \
+    python-setuptools \
+    python3-setuptools \
+    python-pip \
+    python3-pip \
+    python3-venv \
+    --no-install-recommends && \
+    rm -rf /var/lib/apt/lists/* && \
+    apt-get clean
 
 RUN curl -fsSL https://deb.nodesource.com/setup_current.x | bash -
 RUN apt-get install -y nodejs
@@ -36,6 +48,7 @@ RUN rm /home/vscode/.zshrc
 COPY --chown=vscode .zshrc /home/vscode/.zshrc
 
 RUN rustup toolchain install stable
+RUN rustup toolchain install beta
 RUN rustup toolchain install nightly
 
 RUN cargo install \
@@ -48,4 +61,5 @@ RUN cargo install \
     cargo-readme \
     cargo-xbuild \
     worker-build \
-    cargo-watch
+    cargo-watch \
+    cargo-sort
